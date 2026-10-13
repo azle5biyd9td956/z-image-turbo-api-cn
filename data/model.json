@@ -1,0 +1,19 @@
+{
+  "id": "z-image-turbo",
+  "source": "https://apimart.ai/en/pricing",
+  "extracted_at": "2026-10-13T06:43:01Z",
+  "prices": {
+    "default": {
+      "list": 0.0125,
+      "effective": 0.01
+    },
+    "prompt_extend": {
+      "list": 0.025,
+      "effective": 0.02
+    }
+  },
+  "rates": {},
+  "unit": "usd_per_image",
+  "hook": "from $0.01 per image (prompt_extend $0.02)",
+  "model_page": "https://apimart.ai/model/z-image-turbo"
+}
