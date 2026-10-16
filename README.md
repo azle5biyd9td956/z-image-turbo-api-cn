@@ -10,18 +10,20 @@
   <img src="assets/01-product-hero-perfume.jpg" width="820" alt="Sample render via the APIMart image API">
 </p>
 
-> **from $0.01 per image** (prompt_extend $0.02) — one OpenAI-compatible endpoint at `https://api.apimart.ai/v1`, no monthly plan required. *(observed 2026-10-12)*
+> **from $0.01 per image** (prompt_extend $0.02) — 一个 OpenAI 兼容端点 `https://api.apimart.ai/v1`，无需包月套餐。*(数据观测于 2026-10-12)*
 
-**[Get an API key](https://go.apimart.ai/k-da2f11)** · **[Live pricing](https://go.apimart.ai/k-c8dc41)** · **[Model page](https://go.apimart.ai/k-8702f0)** · [⚡ 60-second quickstart](#quickstart)
+**[获取 API Key](https://go.apimart.ai/k-da2f11)** · **[实时价格](https://go.apimart.ai/k-c8dc41)** · **[模型页面](https://go.apimart.ai/k-8702f0)** · [⚡ 60 秒快速上手](#quickstart)
 
-**Why teams call Z-Image Turbo (`z-image-turbo`) through APIMart**
+**为什么团队通过 APIMart 调用 Z-Image Turbo（`z-image-turbo`）**
 
-- **One key, entire catalog.** The same `https://api.apimart.ai/v1` base URL and `Authorization` header reach Z-Image Turbo (`z-image-turbo`) and 300+ other image, video and language models — switch the `model` field, not your client.
-- **$1 minimum, pay as you go.** No subscription and no prepaid plan to size up front: top up from $1 and spend it on calls.
-- **The charge comes back in the response.** Every completed task reports the amount billed (`cost` / `credits_cost`); a task marked `failed` is refunded.
-- **Async by design.** Submit, take the `task_id`, poll `GET /v1/tasks/{id}` — batching and retries are ordinary queue work, not a bespoke integration.
+- **一个 Key，整个目录。**同一个 `https://api.apimart.ai/v1` base URL 和 `Authorization` 请求头即可访问 Z-Image Turbo（`z-image-turbo`）以及图像、视频、语言等 300+ 模型——只需切换 `model` 字段，客户端无需改动。
+- **$1 起充，按量付费。**没有订阅、也没有需要预先估算用量的预付费套餐：最低充值 $1，调用多少扣多少。
+- **费用随响应一并返回。**每个完成的任务都会报告实际计费金额（`cost` / `credits_cost`）；状态为 `failed` 的任务会自动退款。
+- **原生异步设计。**提交任务、拿到 `task_id`、轮询 `GET /v1/tasks/{id}`——批处理和重试都是普通的队列工作，不需要定制集成。
 
 <!-- /conv-kit:v1 -->
+
+
 
 Z-Image Turbo is a fast text-to-image route on APIMart, priced per image.
 
@@ -31,17 +33,17 @@ Z-Image Turbo is a fast text-to-image route on APIMart, priced per image.
 | --- | --- | --- | --- |
 | Per-image | `z-image-turbo` | per delivered image, by resolution | see the [model page](https://go.apimart.ai/k-8702f0) for the exact tiers |
 
-Endpoint: `POST https://api.apimart.ai/v1/images/generations` (OpenAI-compatible), then poll `GET /v1/tasks/{task_id}`.
+Endpoint: `POST https://api.apimart.ai/v1/images/generations`, then poll `GET /v1/tasks/{task_id}`.
 
 ## Pricing
 
 <!-- pricing:model:start -->
 | Output | List price | Effective price |
 | --- | --- | --- |
-| default | $0.0375 | $0.03 |
-| 4K | $0.05 | $0.04 |
+| default | 0.0125 | 0.01 |
+| prompt_extend | 0.025 | 0.02 |
 
-The token-billed official route bills per million tokens instead: `text_input` $1.60, `cached_text_input` free, `image_input` $1.60, `cached_image_input` free, `text_output` $9.60, `image_output` $96.00.
+
 <!-- pricing:model:end -->
 
 Prices are a snapshot; the [pricing page](https://go.apimart.ai/k-c8dc41) and [`data/model.json`](data/model.json) are refreshed by CI, and a completed task reports the exact amount in its `cost` field.
@@ -58,7 +60,7 @@ Prices are a snapshot; the [pricing page](https://go.apimart.ai/k-c8dc41) and [`
 | `image_urls` | string[] | — | reference images as public HTTP(S) URLs or base64 data URLs |
 | `nsfw_check` | boolean | `false` | runs `omni-moderation-latest` before submitting |
 
-The table lists the fields accepted by the APIMart OpenAI-compatible image endpoint. Check the [model page](https://go.apimart.ai/k-8702f0) for anything this model adds on top.
+The table lists the fields accepted by the APIMart `images/generations` endpoint. Check the [model page](https://go.apimart.ai/k-8702f0) for anything this model adds on top.
 
 ## Quickstart
 
@@ -91,17 +93,28 @@ Runnable versions: [`examples/`](examples). The task lifecycle is `pending → p
 
 ## FAQ
 
-**What is the Z-Image Turbo model id?**
+**Z-Image Turbo 的模型 id 是什么？**
 
-`z-image-turbo`. See the route table above.
+`z-image-turbo`。见上方路由表。
 
-**How is it billed?**
+**如何计费？**
 
-**from $0.01 per image** (prompt_extend $0.02). The completed task reports the exact amount in its `cost` field; a failed task is refunded.
+**from $0.01 per image** (prompt_extend $0.02)。完成的任务会在 `cost` 字段中给出准确金额；失败的任务会自动退款。
 
 **How do I get a key?**
 
 Use the [Get an API key](https://go.apimart.ai/k-da2f11) link — $1 minimum top-up, no plan required.
+
+<!-- related-repos:auto -->
+## Related repositories
+
+- **Same model, this language** — the other half of this pair: [z-image-turbo-prompts-cn](https://github.com/azle5biyd9td956/z-image-turbo-prompts-cn)
+- **Same model, other languages** — 9 more language builds: Deutsch `z-image-turbo-api-de` · Español `z-image-turbo-api-es` · Français [z-image-turbo-api-fr](https://github.com/azle5biyd9td956/z-image-turbo-api-fr) · Relay/gateway `z-image-turbo-api-gateway` · Bahasa `z-image-turbo-api-id` · 日本語 [z-image-turbo-api-ja](https://github.com/t9hid1p6ue2a/z-image-turbo-api-ja) · 한국어 [z-image-turbo-api-ko](https://github.com/t9hid1p6ue2a/z-image-turbo-api-ko) · Português `z-image-turbo-api-pt` · Русский `z-image-turbo-api-ru`
+- **More models in this language** — [midjourney-api-cn](https://github.com/apimartycl6k972t/midjourney-api-cn) · [gemini-2-5-flash-image-preview-api-cn](https://github.com/hm-5j/gemini-2-5-flash-image-preview-api-cn) · [nano-banana-api-cn](https://github.com/mpflv/nano-banana-api-cn) · [gemini-3-1-flash-image-preview-api-cn](https://github.com/utp00/gemini-3-1-flash-image-preview-api-cn) · [nano-banana-2-api-cn](https://github.com/i3hxnu6/nano-banana-2-api-cn) · [gemini-3-pro-image-preview-api-cn](https://github.com/vd0tv42d/gemini-3-pro-image-preview-api-cn)
+- **Topic hubs** — every build of this model, all languages: [z-image-turbo](https://github.com/topics/z-image-turbo) · [z-image-turbo-api](https://github.com/topics/z-image-turbo-api)
+
+This repository is one build in a cross-linked set of API guides for the same model family; each language build links back to the others.
+<!-- /related-repos:auto -->
 
 ## Attributed links (how this repository is measured)
 
